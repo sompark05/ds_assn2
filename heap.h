@@ -14,7 +14,7 @@ private:
   pq_element heap[MAX_SIZE];
   int size;
   /* BEGIN_YOUR_CODE */
-  bool findElement(int priority); // find a element with given priority
+
   void upHeapBubble(int priority, int index);
   void downHeapBubble(int priority, int index);
   /* END_YOUR_CODE */
@@ -29,6 +29,8 @@ public:
   pq_element getMax(); // return a pq_element having maximum priority
 
   bool empty(); // is it empty?
+
+  bool findElement(int priority); // find a element with given priority
 
   string printPQ();
 

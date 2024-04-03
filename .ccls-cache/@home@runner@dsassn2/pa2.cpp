@@ -1,6 +1,5 @@
 /*
     Programming Assignment #2
-
 */
 #include "heap.h"
 #include "tree.h"
@@ -185,6 +184,13 @@ void task_5(ofstream &fout, InstructionSequence &instr_seq) {
         int input_value = instr_seq.getInstruction(i).getValue();
 
         /* BEGIN_YOUR_CODE*/
+        // if a node with the specified priority already exists in the queue,
+        // return 0 (ERROR)
+        if (pq.findElement(input_value)) {
+          fout << "ERROR " << endl;
+          continue;
+        }
+
         if (pq.insert(input_value, input_value) == 0) {
           fout << "ERROR " << endl;
           exit(-1);

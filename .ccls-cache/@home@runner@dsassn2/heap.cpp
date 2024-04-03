@@ -20,12 +20,6 @@ bool PriorityQueue::insert(int priority, int value) {
     return 0;
   }
 
-  // if a node with the specified priority already exists in the queue, return 0
-  // (ERROR)
-  if (findElement(priority)) {
-    return 0;
-  }
-
   pq_element *p_element = new pq_element;
   p_element->priority = priority;
   p_element->value = value;
@@ -46,27 +40,6 @@ bool PriorityQueue::insert(int priority, int value) {
   /////////////////////////////////////////////////////////
 }
 
-void PriorityQueue::upHeapBubble(int priority, int index) {
-  if (index == 0) {
-    return;
-  }
-  if (heap[index].priority < heap[(index - 1) / 2].priority) {
-    return;
-  }
-  swap(heap[index], heap[(index - 1) / 2]);
-  upHeapBubble(priority, ((index - 1) / 2));
-  return;
-}
-
-bool PriorityQueue::findElement(int priority) {
-  for (int i = 0; i < size; i++) {
-    if (heap[i].priority == priority) {
-      return true;
-    }
-  }
-  return false;
-}
-
 bool PriorityQueue::removeMax() {
   /////////////////////////////////////////////////////////
   //////////  TODO: Implement From Here      //////////////
@@ -81,27 +54,6 @@ bool PriorityQueue::removeMax() {
   return true;
   ///////////      End of Implementation      /////////////
   /////////////////////////////////////////////////////////
-}
-
-void PriorityQueue::downHeapBubble(int priority, int index) {
-  if (index >= size) {
-    return;
-  }
-  int left_index = (index + 1) * 2 - 1;
-  int right_index = (index + 1) * 2;
-
-  if (heap[index].priority >= heap[left_index].priority &&
-      heap[index].priority >= heap[right_index].priority) {
-    return;
-  }
-
-  if (heap[index].priority < heap[left_index].priority &&
-      heap[right_index].priority < heap[left_index].priority) {
-    swap(heap[index], heap[left_index]);
-  } else if (heap[index].priority < heap[right_index].priority &&
-             heap[left_index].priority < heap[right_index].priority) {
-    swap(heap[index], heap[right_index]);
-  }
 }
 
 pq_element PriorityQueue::getMax() {
@@ -143,6 +95,48 @@ bool PriorityQueue::changeMax(int target) {
 
 /////////////////////////////////////////////////////////
 //////////  You can implement any other functions ////////
+
+bool PriorityQueue::findElement(int priority) {
+  for (int i = 0; i < size; i++) {
+    if (heap[i].priority == priority) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void PriorityQueue::downHeapBubble(int priority, int index) {
+  if (index >= size) {
+    return;
+  }
+  int left_index = (index + 1) * 2 - 1;
+  int right_index = (index + 1) * 2;
+
+  if (heap[index].priority >= heap[left_index].priority &&
+      heap[index].priority >= heap[right_index].priority) {
+    return;
+  }
+
+  if (heap[index].priority < heap[left_index].priority &&
+      heap[right_index].priority < heap[left_index].priority) {
+    swap(heap[index], heap[left_index]);
+  } else if (heap[index].priority < heap[right_index].priority &&
+             heap[left_index].priority < heap[right_index].priority) {
+    swap(heap[index], heap[right_index]);
+  }
+}
+
+void PriorityQueue::upHeapBubble(int priority, int index) {
+  if (index == 0) {
+    return;
+  }
+  if (heap[index].priority < heap[(index - 1) / 2].priority) {
+    return;
+  }
+  swap(heap[index], heap[(index - 1) / 2]);
+  upHeapBubble(priority, ((index - 1) / 2));
+  return;
+}
 
 ///////////      End of Implementation      /////////////
 /////////////////////////////////////////////////////////
